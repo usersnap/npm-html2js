@@ -21,6 +21,7 @@ module.exports = function (opts, callback) {
   var quotes = opts.quotes;
   var exclude = opts.exclude || '';
   var minify = opts.minify;
+  var minifyInlineCss = opts.minifyInlineCss || true;
 
   function processFileData(route, html) {
 
@@ -32,7 +33,8 @@ module.exports = function (opts, callback) {
       html = htmlmin(html, {
         collapseBooleanAttributes: true,
         collapseWhitespace: true,
-        removeComments: true
+        removeComments: true,
+        cssmin: minifyInlineCss
       });
 
     html = html.replace(/\\/g, '\\\\');

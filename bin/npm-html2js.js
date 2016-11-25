@@ -52,6 +52,9 @@ while (args.length) {
     case '--minify':
       opts.minify = true
       break;
+    case '--minifyInlineCss':
+      opts.minifyInlineCss = (args.shift() !== 'false');
+      break;
     default:
       break;
   }
