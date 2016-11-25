@@ -21,7 +21,7 @@ module.exports = function (opts, callback) {
   var quotes = opts.quotes;
   var exclude = opts.exclude || '';
   var minify = opts.minify;
-  var minifyInlineCss = opts.minifyInlineCss || true;
+  var minifyInlineCss = opts.minifyInlineCss !== undefined ? opts.minifyInlineCss : true;
 
   function processFileData(route, html) {
 
