@@ -15,7 +15,6 @@ var opts = {};
 opts.extension  = 'html';
 opts.tplPath    = '**/*.tpl.';
 opts.moduleName = 'app.template';
-opts.minifyInlineCss = true;
 
 var arg;
 while (args.length) {
@@ -52,6 +51,18 @@ while (args.length) {
       break;
     case '--minify':
       opts.minify = true;
+      break;
+    case '--collapseBooleanAttributes':
+      opts.collapseBooleanAttributes = (args.shift() !== 'false');
+      break;
+    case '--collapseWhitespace':
+      opts.collapseWhitespace = (args.shift() !== 'false');
+      break;
+    case '--conservativeCollapse':
+      opts.conservativeCollapse = (args.shift() !== 'false');
+      break;
+    case '--removeComments':
+      opts.removeComments = (args.shift() !== 'false');
       break;
     case '--minifyInlineCss':
       opts.minifyInlineCss = (args.shift() !== 'false');

@@ -4,7 +4,7 @@ var glob = require('glob')
 var jade = require('jade');
 var path = require('path');
 var util = require('util');
-var htmlmin = require('htmlmin');
+var htmlminify = require('html-minifier').minify;
 
 var templateModule = fs.readFileSync(path.join(__dirname, './../tmpl/templateModule.tmpl'), 'utf-8');
 var templateCache = fs.readFileSync(path.join(__dirname, './../tmpl/templateCache.tmpl'), 'utf-8');
@@ -21,6 +21,10 @@ module.exports = function (opts, callback) {
   var quotes = opts.quotes;
   var exclude = opts.exclude || '';
   var minify = opts.minify;
+  var collapseBooleanAttributes = opts.collapseBooleanAttributes !== undefined ? opts.collapseBooleanAttributes : true;
+  var collapseWhitespace = opts.collapseWhitespace !== undefined ? opts.collapseWhitespace : true;
+  var conservativeCollapse = opts.conservativeCollapse !== undefined ? opts.conservativeCollapse : false;
+  var removeComments = opts.removeComments !== undefined ? opts.removeComments : true;
   var minifyInlineCss = opts.minifyInlineCss !== undefined ? opts.minifyInlineCss : true;
 
   function processFileData(route, html) {
@@ -30,11 +34,12 @@ module.exports = function (opts, callback) {
     if (route.indexOf('.jade') !== -1)
       html = jade.render(html, {pretty: true});
     if (minify)
-      html = htmlmin(html, {
-        collapseBooleanAttributes: true,
-        collapseWhitespace: true,
-        removeComments: true,
-        cssmin: minifyInlineCss
+      html = htmlminify(html, {
+        collapseBooleanAttributes: collapseBooleanAttributes,
+        collapseWhitespace: collapseWhitespace,
+        conservativeCollapse: conservativeCollapse,
+        removeComments: removeComments,
+        minifyCSS: minifyInlineCss
       });
 
     html = html.replace(/\\/g, '\\\\');
